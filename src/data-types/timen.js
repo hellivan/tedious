@@ -77,17 +77,22 @@ module.exports = {
     }
   },
 
-  validate: function(value) {
-    if (value == null) {
+  validate(value) {
+    if (value === undefined || value === null) {
       return null;
     }
+
+    let dateValue;
     if (value instanceof Date) {
-      return value;
+      dateValue = value;
+    } else {
+      dateValue = new Date(Date.parse(value));
     }
-    value = Date.parse(value);
-    if (isNaN(value)) {
-      return new TypeError('Invalid time.');
+
+    if (isNaN(dateValue)) {
+      return new TypeError(`The given value could not be converted to ${this.name}`);
     }
-    return value;
+
+    return dateValue;
   }
 };

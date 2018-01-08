@@ -80,20 +80,56 @@ const TYPE = module.exports.TYPE = {
   [Variant.id]: Variant,
 };
 
-const typeByName = module.exports.typeByName = {};
+const typeByName = module.exports.typeByName = {
+  Null,
+  TinyInt,
+  Bit,
+  SmallInt,
+  Int,
+  SmallDateTime,
+  Real,
+  Money,
+  DateTime,
+  Float,
+  Decimal,
+  Numeric,
+  SmallMoney,
+  BigInt,
+  Image,
+  Text,
+  UniqueIdentifierN,
+  IntN,
+  NText,
+  BitN,
+  DecimalN,
+  NumericN,
+  FloatN,
+  MoneyN,
+  DateTimeN,
+  VarBinary,
+  VarChar,
+  Binary,
+  Char,
+  NVarChar,
+  NChar,
+  Xml,
+  TimeN,
+  DateN,
+  DateTime2N,
+  DateTimeOffsetN,
+  UDT,
+  TVP,
+  Variant
+};
 
 for (const id in TYPE) {
   const type = TYPE[id];
-  typeByName[type.name] = type;
-  if ((type.aliases != null) && type.aliases instanceof Array) {
-    const ref = type.aliases;
-    const len = ref.length;
+  if (Array.isArray(type.aliases)) {
+    const length = type.aliases.length;
 
-    for (let i = 0; i < len; i++) {
-      const alias = ref[i];
-      if (!typeByName[alias]) {
-        typeByName[alias] = type;
-      }
+    for (let i = 0; i < length; i++) {
+      const alias = type.aliases[i];
+      typeByName[alias] = type;
     }
   }
 }
